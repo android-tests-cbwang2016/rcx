@@ -5,11 +5,11 @@ if (!getGradle().getStartParameter().getTaskRequests().toString().toLowerCase().
 }
 
 android {
-    signingConfigs {
-        github_x0b {
-            keyAlias 'github_x0b'
-        }
-    }
+//    signingConfigs {
+//        github_x0b {
+//            keyAlias 'github_x0b'
+//        }
+//    }
     compileSdkVersion 29
     defaultConfig {
         applicationId 'io.github.x0b.rcx'
