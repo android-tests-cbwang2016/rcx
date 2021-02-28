@@ -29,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v2-preview
       with:
         name: universal.apk
-        path: app/build/outputs/apk/oss/release/app-oss-universal-release-unsigned.apk.apk
+        path: app/build/outputs/apk/oss/release/app-oss-universal-release-unsigned.apk
 
   release:
     name: Release APK
