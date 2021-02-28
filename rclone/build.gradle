@@ -27,6 +27,7 @@ if (osName.contains('windows')) {
 task fetchRclone(type: Exec) {
     mkdir "gopath"
     environment 'GOPATH', Paths.get(projectDir.absolutePath, 'gopath')
+    environment 'GO111MODULE', 'on'
     commandLine 'go', 'get', '-d', repository
 }
 
