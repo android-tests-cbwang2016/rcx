@@ -19,8 +19,8 @@ jobs:
         go-version: 1.15.8
       id: go
     # https://github.com/actions/virtual-environments/issues/578
-     - name: Fix missing NDK dependency
-       run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.1.6352462"
+    - name: Fix missing NDK dependency
+      run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.1.6352462"
     - name: Build rclone
       run: ./gradlew buildNative -p rclone
     - name: Build app
