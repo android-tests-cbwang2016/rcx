@@ -19,8 +19,8 @@ jobs:
         go-version: 1.15.8
       id: go
     # https://github.com/actions/virtual-environments/issues/578
-    - name: Fix missing NDK dependency
-      run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;20.0.5594570"
+     - name: Fix missing NDK dependency
+       run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.1.6352462"
     - name: Build rclone
       run: ./gradlew buildNative -p rclone
     - name: Build app
@@ -29,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v2-preview
       with:
         name: universal.apk
-        path: app/build/outputs/apk/oss/release/*.apk
+        path: app/build/outputs/apk/oss/release/app-oss-universal-release-unsigned.apk.apk
 
   release:
     name: Release APK

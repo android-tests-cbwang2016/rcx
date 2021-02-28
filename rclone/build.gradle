@@ -5,13 +5,15 @@ def buildTag = 'v1.54.0'
 // DO NOT EDIT ANYTHING BELOW
 //
 import java.nio.file.Paths
-def repository = 'github.com/rclone/rclone'
+
+def repository = 'github.com/rclone/rclone@v1.54.0'
+def ndkVersion = '21.1.6352462'
 def goPath = Paths.get(projectDir.absolutePath, 'gopath').toAbsolutePath().toString()
 def osName = System.properties['os.name'].toLowerCase()
 def osArch = System.properties['os.arch']
 def String os
 if (osName.contains('windows')) {
-    if(osArch.equals('amd64')) {
+    if (osArch.equals('amd64')) {
         os = "windows-x86_64"
     } else if (osArch.equals('x86')) {
         os = "windows"
@@ -30,8 +32,9 @@ task fetchRclone(type: Exec) {
 
 task checkoutRclone(type: Exec) {
     dependsOn fetchRclone
-    workingDir Paths.get(goPath, "src/${repository}".split('/'))
-    commandLine 'git', 'checkout', buildTag
+    workingDir Paths.get(goPath, "pkg/mod/${repository}".split('/'))
+//    commandLine 'git', 'checkout', buildTag
+    commandLine 'echo', 'skipped git checkout', buildTag
 }
 
 task cleanNative {
@@ -47,50 +50,54 @@ task cleanNative {
 task buildArm(type: Exec) {
     dependsOn checkoutRclone
     environment 'GOPATH', Paths.get(projectDir.absolutePath, 'gopath')
-    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk-bundle', 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'armv7a-linux-androideabi21-clang')
+    workingDir Paths.get(goPath, "pkg/mod/${repository}".split('/'))
+    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk', ndkVersion, 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'armv7a-linux-androideabi21-clang')
     environment 'CC', crossCompiler
     environment 'CC_FOR_TARGET', crossCompiler
     environment 'GOOS', 'android'
     environment 'GOARCH', 'arm'
     environment 'GOARM', '7'
     environment 'CGO_ENABLED', '1'
-    commandLine 'go', 'build', '-tags', 'linux', '-o', '../app/lib/armeabi-v7a/librclone.so', repository
+    commandLine 'go', 'build', '-tags', 'linux', '-o', '../../../../../../../app/lib/armeabi-v7a/librclone.so', '.'
 }
 
 task buildArm64(type: Exec) {
     dependsOn checkoutRclone
     environment 'GOPATH', Paths.get(projectDir.absolutePath, 'gopath')
-    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk-bundle', 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'aarch64-linux-android21-clang')
+    workingDir Paths.get(goPath, "pkg/mod/${repository}".split('/'))
+    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk', ndkVersion, 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'aarch64-linux-android21-clang')
     environment 'CC', crossCompiler
     environment 'CC_FOR_TARGET', crossCompiler
     environment 'GOOS', 'android'
     environment 'GOARCH', 'arm64'
     environment 'CGO_ENABLED', '1'
-    commandLine 'go', 'build', '-tags', 'linux', '-o', '../app/lib/arm64-v8a/librclone.so', repository
+    commandLine 'go', 'build', '-tags', 'linux', '-o', '../../../../../../../app/lib/arm64-v8a/librclone.so', '.'
 }
 
 task buildx86(type: Exec) {
     dependsOn checkoutRclone
     environment 'GOPATH', Paths.get(projectDir.absolutePath, 'gopath')
-    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk-bundle', 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'i686-linux-android21-clang')
+    workingDir Paths.get(goPath, "pkg/mod/${repository}".split('/'))
+    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk', ndkVersion, 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'i686-linux-android21-clang')
     environment 'CC', crossCompiler
     environment 'CC_FOR_TARGET', crossCompiler
     environment 'GOOS', 'android'
     environment 'GOARCH', '386'
     environment 'CGO_ENABLED', '1'
-    commandLine 'go', 'build', '-tags', 'linux', '-o', '../app/lib/x86/librclone.so', repository
+    commandLine 'go', 'build', '-tags', 'linux', '-o', '../../../../../../../app/lib/x86/librclone.so', '.'
 }
 
 task buildx64(type: Exec) {
     dependsOn checkoutRclone
     environment 'GOPATH', Paths.get(projectDir.absolutePath, 'gopath')
-    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk-bundle', 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'x86_64-linux-android21-clang')
+    workingDir Paths.get(goPath, "pkg/mod/${repository}".split('/'))
+    def String crossCompiler = Paths.get(System.getenv('ANDROID_HOME'), 'ndk', ndkVersion, 'toolchains', 'llvm', 'prebuilt', os, 'bin', 'x86_64-linux-android21-clang')
     environment 'CC', crossCompiler
     environment 'CC_FOR_TARGET', crossCompiler
     environment 'GOOS', 'android'
     environment 'GOARCH', 'amd64'
     environment 'CGO_ENABLED', '1'
-    commandLine 'go', 'build', '-tags', 'linux', '-o', '../app/lib/x86_64/librclone.so', repository
+    commandLine 'go', 'build', '-tags', 'linux', '-o', '../../../../../../../app/lib/x86_64/librclone.so', '.'
 }
 
 task buildNative {

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 if (!getGradle().getStartParameter().getTaskRequests().toString().toLowerCase().contains("oss")) {
     apply plugin: 'com.google.gms.google-services'
-    apply plugin: 'com.google.firebase.crashlytics'
+//    apply plugin: 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -78,6 +78,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    ndkVersion '21.1.6352462'
 }
 
 repositories {
@@ -88,29 +89,29 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.core:core:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.core:core:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.browser:browser:1.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.preference:preference:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.leinardi.android:speed-dial:2.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.leinardi.android:speed-dial:3.1.1'
     implementation 'org.markdownj:markdownj-core:0.4'
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
     implementation 'com.github.GrenderG:Toasty:1.3.0'
     // Firebase & Crashlytics
-    rcxImplementation 'com.google.firebase:firebase-analytics:17.3.0'
-    rcxImplementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta03'
+//    rcxImplementation 'com.google.firebase:firebase-analytics:18.0.2'
+//    rcxImplementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta03'
     // Thumbnails
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     // REST Client
-    implementation 'com.squareup.okhttp3:okhttp:4.2.0'
-    debugImplementation 'com.squareup.okhttp3:logging-interceptor:4.2.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    debugImplementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     // JSON
     implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
@@ -122,10 +123,10 @@ dependencies {
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     // Java 8+ library support
     // TODO: replace with coreLibraryDesugar once available
-    implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.1'
+    implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.3'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.7.1'
     // TEST
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.4.0-alpha04'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0-alpha04'
 }
